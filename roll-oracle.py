@@ -23,7 +23,7 @@ with open(inputFile, 'rb') as f:
 action1 = entries(taggings, ['VB', 'VBP'])
 action2 = entries(taggings, ['NN', 'NNS', 'NNP'])
 desc1 = entries(taggings, ['RB'])
-desc2 = entries(taggings, ['JJ', 'VBN', 'VBD'])
+desc2 = entries(taggings, ['JJ', 'VBN'])
 
 for i in range(0, 5): roll('Action', action1, action2)
 

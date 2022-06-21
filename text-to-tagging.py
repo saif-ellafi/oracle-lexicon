@@ -15,6 +15,7 @@ outputFile = sys.argv[2]
 stop_words = set(stopwords.words('english'))
 text=''
 with open(inputFile, 'r') as f:
+  # needs pre-processing cleanup?
   text=f.read()
 
 sentences = sent_tokenize(text)
