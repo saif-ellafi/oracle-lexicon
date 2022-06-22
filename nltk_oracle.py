@@ -68,6 +68,16 @@ def gen(pos_tagger):
         roll('Description', desc1, desc2)
 
 
+"""
+USAGE:
+python ./nltk_oracle.py parse path/to/file.txt
+python ./nltk_oracle.py save path/to/file.txt path/to/output.pickle
+python ./nltk_oracle.py load path/to/output.pickle
+python ./nltk_oracle.py parse path/to/file.pdf 10 15
+python ./nltk_oracle.py save path/to/file.pdf 10 15 path/to/output.pickle
+"""
+
+
 def __main__():
     action = sys.argv[1]
     input_path = sys.argv[2]
