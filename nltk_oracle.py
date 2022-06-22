@@ -78,24 +78,28 @@ python ./nltk_oracle.py save path/to/file.pdf 10 15 path/to/output.pickle
 """
 
 
-def __main__():
+def main():
     action = sys.argv[1]
     input_path = sys.argv[2]
     if action == 'parse':
         if input_path.endswith('.txt'):
             gen(parse_txt(input_path))
         elif input_path.endswith('.pdf'):
-            gen(parse_pdf(input_path, sys.argv[3], sys.argv[4]))
+            gen(parse_pdf(input_path, int(sys.argv[3]), int(sys.argv[4])))
         else:
             raise Exception('Supported either .txt or .pdf input paths')
     elif action == 'save':
         if input_path.endswith('.txt'):
             parse_txt(input_path).save(sys.argv[3])
         elif input_path.endswith('.pdf'):
-            parse_pdf(input_path, sys.argv[3], sys.argv[4]).save(sys.argv[5])
+            parse_pdf(input_path, int(sys.argv[3]), int(sys.argv[4])).save(sys.argv[5])
         else:
             raise Exception('Supported either .txt or .pdf input paths')
     elif action == 'load':
         gen(load(sys.argv[2]))
     else:
         raise Exception('Supported action either parse, save or load')
+
+
+if __name__ == "__main__":
+    main()
