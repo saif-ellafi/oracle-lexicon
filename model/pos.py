@@ -11,11 +11,14 @@ class NLTKPosTagger:
         tags = []
         for words_list in tokenized_sentences:
             tags.append(nltk.pos_tag(words_list))
-        self.tags = [element for sublist in tags for element in sublist]
+        self.tags = set([element for sublist in tags for element in sublist])
 
     def save(self, output_path):
         with open(output_path, 'wb') as f:
             pickle.dump(self, f)
+
+    def tagged_as(self, tags):
+        return list(map(lambda x: x[0], filter(lambda x: x[1] in tags, self.tags)))
 
     @staticmethod
     def load(input_path):

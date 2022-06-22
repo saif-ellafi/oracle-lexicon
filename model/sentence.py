@@ -5,5 +5,5 @@ IMPLEMENT ALL POSSIBLE SENTENCE TOKENIZERS HERE
 """
 
 
-def text_tokenize(text):
+def extract_sentences(text):
     return sent_tokenize(text)
