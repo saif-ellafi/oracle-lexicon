@@ -1,9 +1,11 @@
-import nltk
 import pickle
 import sys
 
-for d in ['averaged_perceptron_tagger', 'punkt', 'stopwords', 'universal_tagset', 'universal_treebanks_v20', 'wordnet2021']:
-  nltk.download(d)
+import nltk
+
+for d in ['averaged_perceptron_tagger', 'punkt', 'stopwords', 'universal_tagset', 'universal_treebanks_v20',
+          'wordnet2021']:
+    nltk.download(d)
 
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize, sent_tokenize
@@ -13,10 +15,9 @@ inputFile = sys.argv[1]
 outputFile = sys.argv[2]
 
 stop_words = set(stopwords.words('english'))
-text=''
 with open(inputFile, 'r') as f:
-  # needs pre-processing cleanup?
-  text=f.read()
+    # needs pre-processing cleanup?
+    text = f.read()
 
 sentences = sent_tokenize(text)
 
@@ -29,7 +30,8 @@ for sentence in sentences:
 pos_tags = [element for sublist in pos_tags for element in sublist]
 
 taggings = defaultdict(list)
-for v, k in pos_tags: taggings[k].append(v)
+for v, k in pos_tags:
+    taggings[k].append(v)
 
 with open(outputFile, 'wb') as f:
     pickle.dump(taggings, f)
