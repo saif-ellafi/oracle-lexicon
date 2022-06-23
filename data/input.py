@@ -6,7 +6,12 @@ IMPLEMENT ALL INPUT PROCESSORS, PRE AND POST-PROCESSORS HERE
 
 
 def cleanup_characters(text):
-    return text.replace('’', '').replace('…', '').replace('—', '').replace('- ', '').replace("”", "")
+    return text\
+        .replace('’', '')\
+        .replace('…', '')\
+        .replace('—', '')\
+        .replace('- ', '')\
+        .replace("”", "")
 
 
 def cleanup_breaklines(text):

@@ -7,11 +7,19 @@ IMPLEMENT ALL POS TAGGERS HERE
 
 
 class NLTKPosTagger:
-    def __init__(self, tokenized_sentences):
-        tags = []
-        for words_list in tokenized_sentences:
-            tags.append(nltk.pos_tag(words_list))
-        self.tags = set([element for sublist in tags for element in sublist])
+    def __init__(self, tokenized_sentences, filter_freq=1):
+        tags = [nltk.pos_tag(words_list) for words_list in tokenized_sentences]
+        flattened = [element for sublist in tags for element in sublist]
+        if filter_freq == 1:
+            self.tags = set(flattened)
+        else:
+            frequencies = {}
+            for word in flattened:
+                if word in frequencies:
+                    frequencies[word] += 1
+                else:
+                    frequencies[word] = 0
+            self.tags = [key for key in frequencies.keys() if frequencies[key] >= filter_freq]
 
     def save(self, output_path):
         with open(output_path, 'wb') as f:

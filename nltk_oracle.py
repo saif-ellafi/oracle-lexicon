@@ -30,22 +30,22 @@ def load(input_file):
     return pos_tagger
 
 
-def parse(text):
+def parse(text, min_freq=1):
     cleaned = data.input.cleanup_breaklines(text)
     corrected = data.input.cleanup_characters(cleaned)
     sentences = model.sentence.extract_sentences(corrected)
     tokenized_sentences = []
     for sentence in sentences:
         tokenized_sentences.append(model.token.tokenize_sentence(sentence))
-    return model.pos.NLTKPosTagger(tokenized_sentences)
+    return model.pos.NLTKPosTagger(tokenized_sentences, min_freq)
 
 
-def parse_txt(path):
-    return parse(data.input.load_txt(path))
+def parse_txt(path, min_freq=1):
+    return parse(data.input.load_txt(path), min_freq)
 
 
-def parse_pdf(path, page_start, page_end):
-    return parse(data.input.load_pdf(path, page_start, page_end))
+def parse_pdf(path, page_start, page_end, min_freq=1):
+    return parse(data.input.load_pdf(path, page_start, page_end), min_freq)
 
 
 def gen(pos_tagger):
@@ -83,16 +83,16 @@ def main():
     input_path = sys.argv[2]
     if action == 'parse':
         if input_path.endswith('.txt'):
-            gen(parse_txt(input_path))
+            gen(parse_txt(input_path, int(sys.argv[3])))
         elif input_path.endswith('.pdf'):
-            gen(parse_pdf(input_path, int(sys.argv[3]), int(sys.argv[4])))
+            gen(parse_pdf(input_path, int(sys.argv[3]), int(sys.argv[4]), int(sys.argv[5])))
         else:
             raise Exception('Supported either .txt or .pdf input paths')
     elif action == 'save':
         if input_path.endswith('.txt'):
-            parse_txt(input_path).save(sys.argv[3])
+            parse_txt(input_path, int(sys.argv[4])).save(sys.argv[3])
         elif input_path.endswith('.pdf'):
-            parse_pdf(input_path, int(sys.argv[3]), int(sys.argv[4])).save(sys.argv[5])
+            parse_pdf(input_path, int(sys.argv[3]), int(sys.argv[4]), int(sys.argv[6])).save(sys.argv[5])
         else:
             raise Exception('Supported either .txt or .pdf input paths')
     elif action == 'load':

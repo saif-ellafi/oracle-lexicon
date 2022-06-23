@@ -9,4 +9,4 @@ STOP_WORDS = set(stopwords.words('english'))
 
 
 def tokenize_sentence(sentence):
-    return [w for w in word_tokenize(sentence) if w not in STOP_WORDS]
+    return [w for w in word_tokenize(sentence) if w not in STOP_WORDS and len(w) > 3]
