@@ -1,2 +1,4 @@
 corpus
 .DS_Store
+*.pickle
+*.ipynb_checkpoints
