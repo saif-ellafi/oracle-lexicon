@@ -1,4 +1,4 @@
 corpus
 .DS_Store
-/tagger.pickle
-/.ipynb_checkpoints/
+*.pickle
+*.ipynb_checkpoints
