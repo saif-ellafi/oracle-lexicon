@@ -5,13 +5,15 @@ IMPLEMENT ALL INPUT PROCESSORS, PRE AND POST-PROCESSORS HERE
 """
 
 
-def cleanup_characters(text):
-    return text\
-        .replace('’', '')\
+def cleanup_characters(text, to_lower=True):
+    result = text\
         .replace('…', '')\
         .replace('—', '')\
         .replace('- ', '')\
         .replace("”", "")
+    if to_lower:
+        result = result.lower()
+    return result
 
 
 def cleanup_breaklines(text):

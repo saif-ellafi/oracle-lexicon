@@ -25,6 +25,7 @@ parser.add_argument('--pdf-range', type=str, help='Page Range for PDF files, com
 parser.add_argument('--min-freq', type=int, default=1, help='Minimum frequency of words. Default 2')
 parser.add_argument('--name', type=str, default='proj', help='Project name, used for output files')
 parser.add_argument('--export', action='store_true', help='Project name, used for output files')
+parser.add_argument('--to-lower', action='store_true', help='Lowercase input before processing. Affects results')
 
 
 def models():
@@ -38,9 +39,9 @@ def load(input_file):
     return pos_tagger
 
 
-def parse(text, min_freq=1):
+def parse(text, min_freq=1, to_lower=False):
     cleaned = data.input.cleanup_breaklines(text)
-    corrected = data.input.cleanup_characters(cleaned)
+    corrected = data.input.cleanup_characters(cleaned, to_lower)
     sentences = model.sentence.extract_sentences(corrected)
     tokenized_sentences = []
     for sentence in sentences:
@@ -48,12 +49,12 @@ def parse(text, min_freq=1):
     return model.pos.NLTKPosTagger(tokenized_sentences, min_freq)
 
 
-def parse_txt(path, min_freq=1):
-    return parse(data.input.load_txt(path), min_freq)
+def parse_txt(path, min_freq=1, to_lower=False):
+    return parse(data.input.load_txt(path), min_freq, to_lower)
 
 
-def parse_pdf(path, page_start, page_end, min_freq=1):
-    return parse(data.input.load_pdf(path, page_start, page_end), min_freq)
+def parse_pdf(path, page_start, page_end, min_freq=1, to_lower=False):
+    return parse(data.input.load_pdf(path, page_start, page_end), min_freq, to_lower)
 
 
 def gen(pos_tagger, name, export):
@@ -88,22 +89,22 @@ def main():
     input_path = args['path']
     if action == 'parse':
         if input_path.endswith('.txt'):
-            gen(parse_txt(input_path, args['min_freq']), args['name'], args['export'])
+            gen(parse_txt(input_path, args['min_freq'], args['to_lower']), args['name'], args['export'])
         elif input_path.endswith('.pdf'):
             page_range = args['pdf_range'].split(',')
             page_start = int(page_range[0])
             page_end = int(page_range[1])
-            gen(parse_pdf(input_path, page_start, page_end, args['min_freq']), args['name'], args['export'])
+            gen(parse_pdf(input_path, page_start, page_end, args['min_freq'], args['to_lower']), args['name'], args['export'])
         else:
             raise Exception('Supported either .txt or .pdf input paths')
     elif action == 'save':
         if input_path.endswith('.txt'):
-            parse_txt(input_path, args['min_freq']).save(args['name'] + '.pickle')
+            parse_txt(input_path, args['min_freq'], args['to_lower']).save(args['name'] + '.pickle')
         elif input_path.endswith('.pdf'):
             page_range = args['pdf_range'].split(',')
             page_start = int(page_range[0])
             page_end = int(page_range[1])
-            parse_pdf(input_path, page_start, page_end, args['min_freq']).save(args['name'] + '.pickle')
+            parse_pdf(input_path, page_start, page_end, args['min_freq'], args['to_lower']).save(args['name'] + '.pickle')
         else:
             raise Exception('Supported either .txt or .pdf input paths')
     elif action == 'load':
@@ -114,7 +115,7 @@ def main():
 
 """
 Example Usage
-python nltk_oracle.py parse "path/to/book.pdf" --pdf-range 182,360 --min-freq 3 --export --name my_book
+python nltk_oracle.py parse "path/to/book.pdf" --pdf-range 182,360 --min-freq 3 --export --name my_book --to-lower
 """
 if __name__ == "__main__":
     main()
