@@ -26,16 +26,18 @@ print("Testing NLTK Oracle")
 print("=================")
 
 tagger = parse(example)
-gen(tagger)
+gen(tagger, 'example', False)
 
+print('')
 print("=================")
 print("Testing saving and loading")
 print("=================")
 
 tagger.save('../tagger.pickle')
 loaded_tagger = NLTKPosTagger.load('../tagger.pickle')
-gen(loaded_tagger)
+gen(loaded_tagger, 'example', False)
 
+print('')
 print("=================")
 print("Finished!")
 print("=================")
