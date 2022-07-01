@@ -114,7 +114,7 @@ def main():
 
 """
 Example Usage
-python nltk_oracle.py parse "path/to/book.pdf" --pdf-range 182,360 --min-freq 3 --export
+python nltk_oracle.py parse "path/to/book.pdf" --pdf-range 182,360 --min-freq 3 --export --name my_book
 """
 if __name__ == "__main__":
     main()

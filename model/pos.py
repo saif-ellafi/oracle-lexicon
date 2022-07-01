@@ -30,8 +30,7 @@ class NLTKPosTagger:
         if result and export:
             output_path = (name if name else '_'.join(tags)) + '.txt'
             with open(output_path, 'w', encoding='utf-8') as fp:
-                for item in result:
-                    fp.write("%s\n" % item)
+                fp.write('\n'.join(result))
         return result
 
     @staticmethod
