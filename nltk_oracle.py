@@ -62,7 +62,7 @@ def gen(pos_tagger, name, export):
         concat = ' '.join(rolls)
         print(f'{label}: {concat}')
 
-    action1 = pos_tagger.tagged_as(['VB', 'VBP'], name+'_subect', export)
+    action1 = pos_tagger.tagged_as(['VB', 'VBP'], name+'_subject', export)
     action2 = pos_tagger.tagged_as(['NN', 'NNP'], name+'_action', export)
     desc1 = pos_tagger.tagged_as(['RB'], name+'_adverb', export)
     desc2 = pos_tagger.tagged_as(['JJ', 'VBN'], name+'_adjective', export)
