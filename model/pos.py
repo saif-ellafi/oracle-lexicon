@@ -9,7 +9,7 @@ IMPLEMENT ALL POS TAGGERS HERE
 class NLTKPosTagger:
     def __init__(self, tokenized_sentences, filter_freq=1):
         tags = [nltk.pos_tag(words_list) for words_list in tokenized_sentences]
-        flattened = [element for sublist in tags for element in sublist]
+        flattened = [(element[0].lower(), element[1]) for sublist in tags for element in sublist]
         if filter_freq == 1:
             self.tags = set(flattened)
         else:
