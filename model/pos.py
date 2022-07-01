@@ -28,7 +28,7 @@ class NLTKPosTagger:
     def tagged_as(self, tags, name=None, export=False):
         result = list(map(lambda x: x[0], filter(lambda x: x[1] in tags, self.tags)))
         if result and export:
-            output_path = (name if name else '_'.join(tags)) + '.txt'
+            output_path = (name if name else '_'.join(tags)) + '.csv'
             with open(output_path, 'w', encoding='utf-8') as fp:
                 fp.write('\n'.join(sorted(list(set(result)))))
         return result

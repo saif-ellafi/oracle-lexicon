@@ -3,3 +3,4 @@ corpus
 *.pickle
 *.ipynb_checkpoints
 *.txt
+*.csv
